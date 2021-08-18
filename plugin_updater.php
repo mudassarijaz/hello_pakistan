@@ -61,7 +61,8 @@ abstract class WP_NVT_Plugin_Updater {
 	{
 		add_filter( 'transient_update_plugins', array( $this,  'filter_plugin_update_data' ) );
 		add_filter( 'site_transient_update_plugins', array( $this,  'filter_plugin_update_data' ) );
-	}
+		add_filter( 'upgrader_post_install', 'filter_upgrader_post_install', 10, 2 );
+ 	}
 
 	/**
 	 * Filters the 'update_plugins' transients so that the plugin can be updated without using the WordPress.org repository.
@@ -104,6 +105,11 @@ abstract class WP_NVT_Plugin_Updater {
 			'url'          => $this->get_url(),
 			'package'      => $this->get_package_url(),
 		);
+	}
+	
+	protected function filter_upgrader_post_install(  $response, $hook_extra, $result ) ) {
+		update_option("_last_updated_".$this->slug, time());
+		return $response;
 	}
 }
 

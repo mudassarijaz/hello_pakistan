@@ -14,7 +14,7 @@ class Update_This_Plugin extends WP_NVT_Plugin_Updater {
 	{
         // Do anything you need to provide the latest version number.
         // for example: perform a wp_remote_get() request to a Github repository retrieving the latest release or call out to your own server that hosts the plugin zip.
-		return '1.1.0';
+		return '1.3.0';
 	}
 
 	/**
