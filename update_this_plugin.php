@@ -24,7 +24,7 @@ class Update_This_Plugin extends WP_NVT_Plugin_Updater {
 	 */
 	protected function get_url()
 	{
-		return 'https://github.com/tarecord/my-plugin';
+		return 'https://github.com/mudassarijaz/hello_pakistan';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Update_This_Plugin extends WP_NVT_Plugin_Updater {
 	 */
 	protected function get_package_url()
 	{
-		return 'https://github.com/tarecord/my-plugin/archive/v1.0.0.zip';
+		return 'https://github.com/mudassarijaz/hello_pakistan/archive/refs/heads/main.zip';
 	}
 
 }
