@@ -14,28 +14,31 @@ namespace NexVis\WordPress{
 		{
 			// Do anything you need to provide the latest version number.
 			// for example: perform a wp_remote_get() request to a Github repository retrieving the latest release or call out to your own server that hosts the plugin zip.
-			$plugin_commits = $this->get_commits_url();
-			echo $plugin_commits;
-			$response = wp_remote_get($plugin_commits);
-			$response_body = $response['body'];
+			//$plugin_commits = $this->get_commits_url();
+			//echo $plugin_commits;
+			//$response = wp_remote_get($plugin_commits);
+			//$response_body = $response['body'];
+			$response_body = $this->get_commits_curl();
 			$response_data = json_decode($response_body, false);
-			print_r($response_data);
+			//print "GITHUB Response: ";
+			//print_r($response_data);
 			
-			echo "here we are";
-			echo "<pre>"; print_r($response_data[0]);
-			echo $sTimeLatest = $response_data[0]->commit->author->date; 
-			echo "<br>Latest Update";
-			echo $iTimeLatest = strtotime($sTimeLatest);
+			//echo "here we are";
+			//echo "<pre>"; print_r($response_data[0]);
+			$sTimeLatest = $response_data[0]->commit->author->date; 
+			//echo "<br>Latest Update";
+			$iTimeLatest = strtotime($sTimeLatest);
+			//echo $iTimeLatest;
 			
 			$last_updated = (int) $this->get_last_update_time();
-			echo "<br>Last Updated: ";
-			echo $last_updated;
-			print_r("What? new version?");
-			if( $sTimeLatest > $last_updated){ //Plugin has update
-				print_r("What? Yes new version?");
+			//echo "<br>Last Updated: ";
+			//echo $last_updated;
+			//print_r("What? new version?");
+			if( $iTimeLatest > $last_updated){ //Plugin has update
+				//print_r("What? Yes new version?");
 				$version = true;
 			}else {
-				print_r("What? No new version?");
+				//print_r("What? No new version?");
 				$version = $this->get_current_version();
 				$version = false;
 			}
@@ -92,6 +95,28 @@ namespace NexVis\WordPress{
 		protected function get_private_package()
 		{
 			return 'https://api.github.com/repos/mudassarijaz/hello_pakistan/zipball';
+		}
+		
+		protected function get_commits_curl(){
+			$objCurl = curl_init();
+			$url = $this->get_commits_url();
+			$access_token = "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";
+			$url = $url."?access_token=".$access_token;
+			
+			//The repo we want to get
+			curl_setopt($objCurl, CURLOPT_URL, $url);
+			
+			//To comply with https://developer.github.com/v3/#user-agent-required
+			curl_setopt($objCurl, CURLOPT_USERAGENT, "mudassarijaz"); 
+			
+			//Skip verification (kinda insecure)
+			curl_setopt($objCurl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($objCurl, CURLOPT_RETURNTRANSFER, true);
+			
+			//Get the response
+			$response = curl_exec($objCurl);
+			
+			return $response;
 		}
 	}
 }
