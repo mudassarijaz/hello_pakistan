@@ -1,14 +1,14 @@
 <?php
 /**
  * @package Hello_Pakistan
- * @version 1.1.0
+ * @version 1.2.0
  */
 /*
 Plugin Name: Hello Pakistan
 Plugin URI: http://wordpress.org/plugins/hello-pakistan/
 Description: This is not just a plugin, it symbolizes the hope and enthusiasm of an entire nation summed up in interesting facts. <cite>Hello, Pakistan</cite> will show you facts about Pakistan in the upper right of your admin screen on every page.
 Author: Irfan Masood
-Version: 1.1.0
+Version: 1.2.0
 Author URI: https://nexvistech.Com/
 */
 
@@ -104,7 +104,8 @@ add_action( 'admin_head', 'dolly_css' );
 require ( plugin_dir_path( __FILE__ ) ). 'update_this_plugin.php';
 
 // Initialize your extension of the class passing in the current plugin version and slug.
-$updater = new NexVis\WordPress\Update_This_Plugin( '1.0.0', 'hello_pakistan' );
+$updater = new NexVis\WordPress\Update_This_Plugin( '1.2.0', 'hello_pakistan-main', 'hello_pakistan' );
 
 // Initialize the class which sets up the filters for `transient_update_plugins` and `site_transient_update_plugins`
 $updater->init();
+
